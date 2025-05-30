@@ -5,8 +5,8 @@
       <div class="card">
         <div class="card-header">
           <div class="d-flex justify-content-between align-items-center">
-            <h2 class="mb-0">Saved Candidates</h2>
-            <%= link_to 'Process New Resume', root_path, class: 'btn btn-primary' %>
+            <h2 class="mb-0"><%= t('saved_candidates.index.title') %></h2>
+            <%= link_to t('saved_candidates.index.process_new'), root_path, class: 'btn btn-primary' %>
           </div>
         </div>
 
@@ -29,8 +29,8 @@
                             method: :delete,
                             class: 'btn btn-danger btn-sm',
                             form: { class: 'd-inline-block' },
-                            data: { turbo_confirm: 'Are you sure?' } do %>
-                          <i class="bi bi-trash"></i> Remove
+                            data: { turbo_confirm: t('saved_candidates.index.confirm_delete') } do %>
+                          <i class="bi bi-trash"></i> <%= t('saved_candidates.index.remove') %>
                         <% end %>
                       </div>
 
@@ -38,23 +38,23 @@
                         <div class="col-md-6">
                           <dl class="row mb-0">
                             <% if summary["email"].present? %>
-                              <dt class="col-sm-4">Email:</dt>
+                              <dt class="col-sm-4"><%= t('resumes.show.fields.email') %>:</dt>
                               <dd class="col-sm-8"><%= summary["email"] %></dd>
                             <% end %>
                             
                             <% if summary["phone"].present? %>
-                              <dt class="col-sm-4">Phone:</dt>
+                              <dt class="col-sm-4"><%= t('resumes.show.fields.phone') %>:</dt>
                               <dd class="col-sm-8"><%= summary["phone"] %></dd>
                             <% end %>
                             
                             <% if summary["location"].present? %>
-                              <dt class="col-sm-4">Location:</dt>
+                              <dt class="col-sm-4"><%= t('resumes.show.fields.location') %>:</dt>
                               <dd class="col-sm-8"><%= summary["location"] %></dd>
                             <% end %>
                             
                             <% if summary["experience_years"].present? %>
-                              <dt class="col-sm-4">Experience:</dt>
-                              <dd class="col-sm-8"><%= summary["experience_years"] %> years</dd>
+                              <dt class="col-sm-4"><%= t('resumes.show.fields.experience_years') %>:</dt>
+                              <dd class="col-sm-8"><%= summary["experience_years"] %></dd>
                             <% end %>
                           </dl>
                         </div>
@@ -62,7 +62,7 @@
                         <div class="col-md-6">
                           <% if summary["education"].present? %>
                             <div class="mb-2">
-                              <strong>Education:</strong><br>
+                              <strong><%= t('resumes.show.education') %>:</strong><br>
                               <% summary["education"].each do |edu| %>
                                 <%= edu["degree"] %> from <%= edu["institution"] %> (<%= edu["year"] %>)<br>
                               <% end %>
@@ -71,7 +71,7 @@
 
                           <% if summary["work_experience"].present? %>
                             <div class="mb-2">
-                              <strong>Latest Position:</strong><br>
+                              <strong><%= t('resumes.show.work_experience') %>:</strong><br>
                               <% latest_exp = summary["work_experience"].first %>
                               <%= latest_exp["position"] %> at <%= latest_exp["company"] %> (<%= latest_exp["duration"] %>)
                             </div>
@@ -88,7 +88,7 @@
                       <% end %>
 
                       <div class="mt-3">
-                        <%= link_to 'View Full Resume', resume_path(candidate.resume), class: 'btn btn-outline-primary btn-sm' %>
+                        <%= link_to t('saved_candidates.index.view_full'), resume_path(candidate.resume), class: 'btn btn-outline-primary btn-sm' %>
                       </div>
                     </div>
                   </div>
@@ -98,11 +98,11 @@
           <% else %>
             <div class="alert alert-info">
               <% if params[:tag_ids].present? %>
-                No candidates found with selected skills.
-                <%= link_to 'Show All', saved_candidates_path, class: 'btn btn-link p-0' %>
+                <%= t('saved_candidates.index.no_candidates_filtered') %>
+                <%= link_to t('saved_candidates.index.show_all'), saved_candidates_path, class: 'btn btn-link p-0' %>
               <% else %>
-                You haven't saved any candidates yet. 
-                <%= link_to 'Process a resume', root_path %> to get started.
+                <%= t('saved_candidates.index.no_candidates') %>
+                <%= link_to t('saved_candidates.index.start_processing'), root_path %>
               <% end %>
             </div>
           <% end %>
@@ -114,7 +114,7 @@
     <div class="col-md-3">
       <div class="card">
         <div class="card-header">
-          <h5 class="mb-0">Filter by Skills</h5>
+          <h5 class="mb-0"><%= t('saved_candidates.filters.title') %></h5>
         </div>
         <div class="card-body">
           <%= form_tag saved_candidates_path, method: :get, class: 'js-filter-form' do %>
@@ -124,7 +124,7 @@
                   <div class="input-group">
                     <input type="text" 
                            class="form-control form-control-sm" 
-                           placeholder="Search skills..."
+                           placeholder="<%= t('saved_candidates.filters.search_placeholder') %>"
                            data-skill-search-target="input"
                            data-action="input->skill-search#search">
                   </div>
@@ -146,15 +146,15 @@
                 </div>
 
                 <div class="mt-3">
-                  <%= submit_tag 'Apply Filters', class: 'btn btn-primary btn-sm w-100 mb-2' %>
+                  <%= submit_tag t('saved_candidates.filters.apply'), class: 'btn btn-primary btn-sm w-100 mb-2' %>
                   <% if params[:tag_ids].present? %>
-                    <%= link_to 'Clear All', saved_candidates_path, 
+                    <%= link_to t('saved_candidates.filters.clear'), saved_candidates_path, 
                         class: 'btn btn-outline-secondary btn-sm w-100' %>
                   <% end %>
                 </div>
               </div>
             <% else %>
-              <p class="text-muted mb-0">No skills available yet</p>
+              <p class="text-muted mb-0"><%= t('saved_candidates.filters.no_skills') %></p>
             <% end %>
           <% end %>
         </div>

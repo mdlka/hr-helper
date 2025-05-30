@@ -1,14 +1,13 @@
 <div class="container py-5">
   <div class="row justify-content-center">
     <div class="col-md-8 text-center">
-      <h1 class="display-4 mb-4">Welcome to HR Helper</h1>
+      <h1 class="display-4 mb-4"><%= t('home.welcome') %></h1>
       <p class="lead mb-4">
-        Process and analyze resumes efficiently with our AI-powered tool.
-        Sign in to get started or create a new account.
+        <%= t('home.description') %>
       </p>
       <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
-        <%= link_to 'Sign In', new_user_session_path, class: 'btn btn-primary btn-lg px-4' %>
-        <%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-outline-primary btn-lg px-4' %>
+        <%= link_to t('navigation.sign_in'), new_user_session_path, class: 'btn btn-primary btn-lg px-4' %>
+        <%= link_to t('navigation.sign_up'), new_user_registration_path, class: 'btn btn-outline-primary btn-lg px-4' %>
       </div>
     </div>
   </div>

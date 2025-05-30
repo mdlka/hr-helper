@@ -17,7 +17,7 @@ class Resume < ApplicationRecord
 
   def validate_content_length
     if content.to_s.length < MIN_CONTENT_LENGTH
-      errors.add(:content, "слишком короткий текст. Минимальная длина: #{MIN_CONTENT_LENGTH} символов")
+      errors.add(:content, :too_short, count: MIN_CONTENT_LENGTH)
     end
   end
 end

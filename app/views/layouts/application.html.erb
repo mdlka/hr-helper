@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>HR Helper</title>
+    <title><%= t('app_name') %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -26,7 +26,7 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
       <div class="container">
-        <%= link_to 'HR Helper', root_path, class: 'navbar-brand' %>
+        <%= link_to t('app_name'), root_path, class: 'navbar-brand' %>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -34,21 +34,21 @@
           <ul class="navbar-nav me-auto">
             <% if user_signed_in? %>
               <li class="nav-item">
-                <%= link_to 'Saved Candidates', saved_candidates_path, class: 'nav-link' %>
+                <%= link_to t('navigation.saved_candidates'), saved_candidates_path, class: 'nav-link' %>
               </li>
             <% end %>
           </ul>
           <ul class="navbar-nav">
             <% if user_signed_in? %>
               <li class="nav-item">
-                <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'nav-link', form_class: 'd-inline' %>
+                <%= button_to t('navigation.sign_out'), destroy_user_session_path, method: :delete, class: 'nav-link', form_class: 'd-inline' %>
               </li>
             <% else %>
               <li class="nav-item">
-                <%= link_to 'Sign In', new_user_session_path, class: 'nav-link' %>
+                <%= link_to t('navigation.sign_in'), new_user_session_path, class: 'nav-link' %>
               </li>
               <li class="nav-item">
-                <%= link_to 'Sign Up', new_user_registration_path, class: 'nav-link' %>
+                <%= link_to t('navigation.sign_up'), new_user_registration_path, class: 'nav-link' %>
               </li>
             <% end %>
           </ul>

@@ -19,7 +19,7 @@ class SavedCandidatesController < ApplicationController
 
   def destroy
     @saved_candidate.destroy
-    redirect_to saved_candidates_path, notice: 'Candidate was successfully removed from saved.'
+    redirect_to saved_candidates_path, notice: t('saved_candidates.flash.removed')
   end
 
   private

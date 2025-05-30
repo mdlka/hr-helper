@@ -1,0 +1,117 @@
+ru:
+  app_name: "HR Helper"
+  navigation:
+    saved_candidates: "Сохранённые кандидаты"
+    sign_out: "Выйти"
+    sign_in: "Войти"
+    sign_up: "Регистрация"
+  
+  home:
+    welcome: "Добро пожаловать в HR Helper"
+    description: "Обрабатывайте и анализируйте резюме эффективно с помощью нашего AI-инструмента. Войдите в систему или создайте новый аккаунт, чтобы начать."
+  
+  resumes:
+    new:
+      title: "Обработка резюме"
+      submit: "Обработать резюме"
+      content_label: "Вставьте текст резюме"
+      min_length: "Минимальная длина текста: %{length} символов"
+    show:
+      title: "Анализ резюме"
+      save_candidate: "Сохранить кандидата"
+      original_text: "Исходный текст резюме"
+      extracted_info: "Извлечённая информация"
+      personal_info: "Личная информация"
+      education: "Образование"
+      work_experience: "Опыт работы"
+      skills: "Навыки"
+      back_to_candidates: "Вернуться к сохранённым"
+      process_another: "Обработать ещё резюме"
+      fields:
+        name: "Имя"
+        email: "Email"
+        phone: "Телефон"
+        location: "Местоположение"
+        current_position: "Текущая должность"
+        experience_years: "Лет опыта"
+    flash:
+      processed: "Резюме успешно обработано."
+      candidate_saved: "Кандидат успешно сохранен."
+      error_saving: "Ошибка при сохранении кандидата."
+      unauthorized: "У вас нет доступа к этому резюме."
+  
+  saved_candidates:
+    index:
+      title: "Сохранённые кандидаты"
+      process_new: "Обработать новое резюме"
+      remove: "Удалить"
+      view_full: "Просмотреть полное резюме"
+      no_candidates: "У вас пока нет сохранённых кандидатов."
+      no_candidates_filtered: "Не найдено кандидатов с выбранными навыками."
+      start_processing: "Обработайте резюме, чтобы начать"
+      show_all: "Показать все"
+      confirm_delete: "Вы уверены?"
+    filters:
+      title: "Фильтр по навыкам"
+      search_placeholder: "Поиск навыков..."
+      apply: "Применить фильтры"
+      clear: "Сбросить"
+      no_skills: "Пока нет доступных навыков"
+    flash:
+      removed: "Кандидат успешно удален из сохраненных."
+  
+  devise:
+    sessions:
+      new:
+        title: "Вход в систему"
+        remember_me: "Запомнить меня"
+      signed_in: "Вход в систему выполнен успешно."
+      signed_out: "Выход из системы выполнен успешно."
+    registrations:
+      new:
+        title: "Регистрация"
+        min_password: "минимум %{length} символов"
+      signed_up: "Регистрация выполнена успешно."
+    failure:
+      invalid: "Неверный %{authentication_keys} или пароль."
+    shared:
+      email: "Email"
+      password: "Пароль"
+      password_confirmation: "Подтверждение пароля"
+  
+  errors:
+    messages:
+      not_saved: "Возникли ошибки:"
+      content_too_short: "слишком короткий текст. Минимальная длина: %{length} символов"
+      taken: "уже используется"
+      too_short: "слишком короткий (минимум %{count} символов)"
+      confirmation: "не совпадает с паролем"
+  
+  activerecord:
+    models:
+      user: "Пользователь"
+      resume: "Резюме"
+    attributes:
+      user:
+        email: "Email"
+        password: "Пароль"
+        password_confirmation: "Подтверждение пароля"
+      resume:
+        content: "Текст резюме"
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              blank: "не может быть пустым"
+              taken: "уже используется"
+            password:
+              blank: "не может быть пустым"
+              too_short: "слишком короткий (минимум %{count} символов)"
+            password_confirmation:
+              confirmation: "не совпадает с паролем"
+        resume:
+          attributes:
+            content:
+              blank: "не может быть пустым"
+              too_short: "слишком короткий (минимум %{count} символов)" 

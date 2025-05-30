@@ -2,57 +2,57 @@
   <div class="col-md-12">
     <div class="card mb-4">
       <div class="card-header d-flex justify-content-between align-items-center">
-        <h2 class="mb-0">Resume Analysis</h2>
+        <h2 class="mb-0"><%= t('resumes.show.title') %></h2>
         <% if user_signed_in? && !current_user.saved_candidates.exists?(resume: @resume) %>
           <%= button_to save_candidate_resume_path(@resume), 
               method: :post,
               class: 'btn btn-success' do %>
-            <i class="bi bi-bookmark-plus"></i> Save Candidate
+            <i class="bi bi-bookmark-plus"></i> <%= t('resumes.show.save_candidate') %>
           <% end %>
         <% end %>
       </div>
       <div class="card-body">
         <div class="row">
           <div class="col-md-6">
-            <h4>Original Resume Text</h4>
+            <h4><%= t('resumes.show.original_text') %></h4>
             <div class="border p-3 bg-light">
               <pre class="mb-0" style="white-space: pre-wrap;"><%= @resume.content %></pre>
             </div>
           </div>
           
           <div class="col-md-6">
-            <h4>Extracted Information</h4>
+            <h4><%= t('resumes.show.extracted_info') %></h4>
             <div class="border p-3 bg-light mb-3">
               <% summary = @resume.parsed_summary %>
               
               <div class="mb-4">
-                <h5 class="border-bottom pb-2">Personal Information</h5>
+                <h5 class="border-bottom pb-2"><%= t('resumes.show.personal_info') %></h5>
                 <dl class="row">
-                  <dt class="col-sm-4">Name:</dt>
+                  <dt class="col-sm-4"><%= t('resumes.show.fields.name') %>:</dt>
                   <dd class="col-sm-8"><%= summary["name"] %></dd>
                   
                   <% if summary["email"].present? %>
-                    <dt class="col-sm-4">Email:</dt>
+                    <dt class="col-sm-4"><%= t('resumes.show.fields.email') %>:</dt>
                     <dd class="col-sm-8"><%= summary["email"] %></dd>
                   <% end %>
                   
                   <% if summary["phone"].present? %>
-                    <dt class="col-sm-4">Phone:</dt>
+                    <dt class="col-sm-4"><%= t('resumes.show.fields.phone') %>:</dt>
                     <dd class="col-sm-8"><%= summary["phone"] %></dd>
                   <% end %>
                   
                   <% if summary["location"].present? %>
-                    <dt class="col-sm-4">Location:</dt>
+                    <dt class="col-sm-4"><%= t('resumes.show.fields.location') %>:</dt>
                     <dd class="col-sm-8"><%= summary["location"] %></dd>
                   <% end %>
                   
                   <% if summary["current_position"].present? %>
-                    <dt class="col-sm-4">Current Position:</dt>
+                    <dt class="col-sm-4"><%= t('resumes.show.fields.current_position') %>:</dt>
                     <dd class="col-sm-8"><%= summary["current_position"] %></dd>
                   <% end %>
                   
                   <% if summary["experience_years"].present? %>
-                    <dt class="col-sm-4">Years of Experience:</dt>
+                    <dt class="col-sm-4"><%= t('resumes.show.fields.experience_years') %>:</dt>
                     <dd class="col-sm-8"><%= summary["experience_years"] %></dd>
                   <% end %>
                 </dl>
@@ -60,7 +60,7 @@
 
               <% if summary["education"].present? %>
                 <div class="mb-4">
-                  <h5 class="border-bottom pb-2">Education</h5>
+                  <h5 class="border-bottom pb-2"><%= t('resumes.show.education') %></h5>
                   <% summary["education"].each do |edu| %>
                     <div class="mb-2">
                       <strong><%= edu["degree"] %></strong><br>
@@ -72,7 +72,7 @@
 
               <% if summary["work_experience"].present? %>
                 <div class="mb-4">
-                  <h5 class="border-bottom pb-2">Work Experience</h5>
+                  <h5 class="border-bottom pb-2"><%= t('resumes.show.work_experience') %></h5>
                   <% summary["work_experience"].each do |exp| %>
                     <div class="mb-3">
                       <strong><%= exp["position"] %></strong><br>
@@ -84,7 +84,7 @@
 
               <% if summary["skills"].present? %>
                 <div class="mb-4">
-                  <h5 class="border-bottom pb-2">Skills</h5>
+                  <h5 class="border-bottom pb-2"><%= t('resumes.show.skills') %></h5>
                   <div class="d-flex flex-wrap gap-2">
                     <% summary["skills"].each do |skill| %>
                       <span class="badge bg-primary"><%= skill %></span>
@@ -99,8 +99,8 @@
     </div>
 
     <div class="d-flex justify-content-between">
-      <%= link_to 'Back to Saved Candidates', saved_candidates_path, class: 'btn btn-secondary' if user_signed_in? %>
-      <%= link_to 'Process Another Resume', root_path, class: 'btn btn-primary' %>
+      <%= link_to t('resumes.show.back_to_candidates'), saved_candidates_path, class: 'btn btn-secondary' if user_signed_in? %>
+      <%= link_to t('resumes.show.process_another'), root_path, class: 'btn btn-primary' %>
     </div>
   </div>
 </div> 

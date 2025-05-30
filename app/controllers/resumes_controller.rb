@@ -19,7 +19,7 @@ class ResumesController < ApplicationController
     if @resume.save
       @resume.tags = tags
       
-      redirect_to @resume, notice: 'Resume was successfully processed.'
+      redirect_to @resume, notice: t('resumes.flash.processed')
     else
       render :new, status: :unprocessable_entity
     end
@@ -29,12 +29,10 @@ class ResumesController < ApplicationController
   end
 
   def save_candidate
-    saved_candidate = current_user.saved_candidates.new(resume: @resume)
-    
-    if saved_candidate.save
-      redirect_to saved_candidates_path, notice: 'Candidate was successfully saved.'
+    if current_user.saved_candidates.create(resume: @resume)
+      redirect_to saved_candidates_path, notice: t('resumes.flash.candidate_saved')
     else
-      redirect_to @resume, alert: 'Unable to save candidate.'
+      redirect_to @resume, alert: t('resumes.flash.error_saving')
     end
   end
 
@@ -50,7 +48,7 @@ class ResumesController < ApplicationController
 
   def check_resume_access
     unless @resume.user == current_user || current_user.saved_candidates.exists?(resume: @resume)
-      redirect_to root_path, alert: 'You are not authorized to view this resume.'
+      redirect_to root_path, alert: t('resumes.flash.unauthorized')
     end
   end
 end 
