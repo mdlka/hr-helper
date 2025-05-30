@@ -3,7 +3,18 @@ class SavedCandidatesController < ApplicationController
   before_action :set_saved_candidate, only: [:destroy]
 
   def index
-    @saved_candidates = current_user.saved_candidates.includes(:resume)
+    @saved_candidates = current_user.saved_candidates.includes(resume: :tags)
+    @tags = Tag.all.order(:name)
+    
+    if params[:tag_ids].present?
+      tag_ids = Array(params[:tag_ids])
+      
+      @saved_candidates = @saved_candidates
+        .joins(resume: :resume_tags)
+        .where(resume_tags: { tag_id: tag_ids })
+        .group('saved_candidates.id')
+        .having('COUNT(DISTINCT resume_tags.tag_id) = ?', tag_ids.length)
+    end
   end
 
   def destroy

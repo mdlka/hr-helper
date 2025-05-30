@@ -1,0 +1,34 @@
+.skill-list {
+  max-height: 400px;
+  overflow-y: auto;
+  position: relative;
+}
+
+.skill-list .form-check {
+  position: relative;
+  z-index: 2;
+}
+
+.form-check-input {
+  position: relative;
+  z-index: 3;
+}
+
+.form-check-input:focus {
+  z-index: 4;
+}
+
+.form-check .badge {
+  position: relative;
+  z-index: 1;
+}
+
+.form-check {
+  padding: 8px;
+  margin-bottom: 4px !important;
+  border-radius: 4px;
+}
+
+.form-check:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+} 
