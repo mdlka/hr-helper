@@ -128,6 +128,7 @@ GEM
       logger
     faraday-net_http (3.4.0)
       net-http (>= 0.5.0)
+    fiddle (1.1.8)
     fugit (1.11.1)
       et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
@@ -376,6 +377,7 @@ DEPENDENCIES
   debug
   devise
   faraday
+  fiddle
   importmap-rails
   jbuilder
   kamal
