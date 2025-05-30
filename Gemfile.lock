@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/mdlka/ollama-adapter.git
+  revision: 7257297b510de7c0da1b30d6663fb0dafd1c744d
+  tag: 1.0.0
+  specs:
+    ollama_adapter (0.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -363,6 +370,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   kamal
+  ollama_adapter!
   propshaft
   puma (>= 5.0)
   rails (~> 8.0.2)
