@@ -12,7 +12,7 @@ class ResumesController < ApplicationController
     @resume.user = current_user if user_signed_in?
 
     processor = ResumeProcessorService.new
-    summary, tags, error = processor.process(@resume.content)
+    summary, skill_names, error = processor.process(@resume.content)
     
     if error.present?
       @resume.errors.add(:base, error)
@@ -23,7 +23,8 @@ class ResumesController < ApplicationController
     @resume.summary = summary
     
     if @resume.save
-      @resume.tags = tags
+      session[:resume_skills] ||= {}
+      session[:resume_skills][@resume.id.to_s] = skill_names
       
       redirect_to @resume, notice: t('resumes.flash.processed')
     else
@@ -35,10 +36,19 @@ class ResumesController < ApplicationController
   end
 
   def save_candidate
-    if current_user.saved_candidates.create(resume: @resume)
-      redirect_to saved_candidates_path, notice: t('resumes.flash.candidate_saved')
-    else
-      redirect_to @resume, alert: t('resumes.flash.error_saving')
+    ActiveRecord::Base.transaction do
+      if session[:resume_skills] && session[:resume_skills][@resume.id.to_s].present?
+        skill_names = session[:resume_skills][@resume.id.to_s]
+        tags = skill_names.map { |name| Tag.find_or_create_by!(name: name) }
+        @resume.tags = tags
+        session[:resume_skills].delete(@resume.id.to_s)
+      end
+
+      if current_user.saved_candidates.create(resume: @resume)
+        redirect_to saved_candidates_path, notice: t('resumes.flash.candidate_saved')
+      else
+        redirect_to @resume, alert: t('resumes.flash.error_saving')
+      end
     end
   end
 

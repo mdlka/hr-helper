@@ -78,12 +78,8 @@ class ResumeProcessorService
       
       unique_skills = skills.compact.map(&:strip).uniq.reject(&:empty?)
       data["skills"] = unique_skills
-      
-      tags = unique_skills.map do |skill|
-        Tag.find_or_create_by!(name: skill)
-      end
 
-      [JSON.pretty_generate(data), tags, nil]
+      [JSON.pretty_generate(data), unique_skills, nil]
     rescue OllamaAdapter::Error => e
       [nil, [], I18n.t('resumes.flash.processing_error', reason: e.message)]
     rescue StandardError => e
