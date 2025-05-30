@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">Saved Candidates</h2>
+        <%= link_to 'Process New Resume', root_path, class: 'btn btn-primary' %>
+      </div>
+      <div class="card-body">
+        <% if @saved_candidates.any? %>
+          <div class="list-group">
+            <% @saved_candidates.each do |candidate| %>
+              <div class="list-group-item">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div class="ms-2 me-auto">
+                    <div class="d-flex w-100 justify-content-between">
+                      <%= link_to resume_path(candidate.resume), class: "text-decoration-none" do %>
+                        <h5 class="mb-2">Candidate Resume</h5>
+                      <% end %>
+                      <%= button_to saved_candidate_path(candidate), 
+                          method: :delete,
+                          class: 'btn btn-danger btn-sm',
+                          form: { class: 'd-inline-block' },
+                          data: { turbo_confirm: 'Are you sure?' } do %>
+                        <i class="bi bi-trash"></i> Remove
+                      <% end %>
+                    </div>
+                    <p class="mb-1 text-muted"><%= truncate(candidate.resume.summary, length: 200) %></p>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="text-center py-4">
+            <p class="lead">You haven't saved any candidates yet.</p>
+            <%= link_to 'Process a Resume', root_path, class: 'btn btn-primary' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div> 

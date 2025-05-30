@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">Resume Analysis</h2>
+        <% if user_signed_in? && !current_user.saved_candidates.exists?(resume: @resume) %>
+          <%= button_to save_candidate_resume_path(@resume), 
+              method: :post,
+              class: 'btn btn-success' do %>
+            <i class="bi bi-bookmark-plus"></i> Save Candidate
+          <% end %>
+        <% end %>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <h4>Original Resume Text</h4>
+            <div class="border p-3 bg-light">
+              <pre class="mb-0" style="white-space: pre-wrap;"><%= @resume.content %></pre>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <h4>Summary</h4>
+            <div class="border p-3 bg-light mb-3">
+              <pre class="mb-0" style="white-space: pre-wrap;"><%= @resume.summary %></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <%= link_to 'Back to Saved Candidates', saved_candidates_path, class: 'btn btn-secondary' if user_signed_in? %>
+      <%= link_to 'Process Another Resume', root_path, class: 'btn btn-primary' %>
+    </div>
+  </div>
+</div> 
