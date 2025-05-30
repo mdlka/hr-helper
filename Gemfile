@@ -63,4 +63,5 @@ group :test do
 end
 
 gem "devise"
+gem "faraday"
 gem "ollama_adapter", github: "mdlka/ollama-adapter", tag: "1.0.0"
