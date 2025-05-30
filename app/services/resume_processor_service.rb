@@ -1,7 +1,7 @@
-require 'ollama_adapter'
-require 'ollama_adapter/ollama_client'
-require 'ollama_adapter/extractor'
-require 'ollama_adapter/prompt_builder'
+require "ollama_adapter"
+require "ollama_adapter/ollama_client"
+require "ollama_adapter/extractor"
+require "ollama_adapter/prompt_builder"
 
 class ResumeProcessorService
   def initialize
@@ -59,31 +59,31 @@ class ResumeProcessorService
       else
         nil
       end
-      
+
       if parsed_result.nil?
-        return [nil, [], I18n.t('resumes.flash.processing_error', reason: "Failed to process resume")]
+        return [ nil, [], I18n.t("resumes.flash.processing_error", reason: "Failed to process resume") ]
       end
-      
+
       data = parsed_result.dig("properties") || parsed_result
 
-      if (data["email"].blank? && data["phone"].blank?)
-        return [nil, [], I18n.t('resumes.flash.missing_contacts')]
+      if data["email"].blank? && data["phone"].blank?
+        return [ nil, [], I18n.t("resumes.flash.missing_contacts") ]
       end
-      
+
       skills = data["skills"]
 
       unless skills.is_a?(Array)
-        return [nil, [], I18n.t('resumes.flash.processing_error', reason: "invalid skills format")]
+        return [ nil, [], I18n.t("resumes.flash.processing_error", reason: "invalid skills format") ]
       end
-      
+
       unique_skills = skills.compact.map(&:strip).uniq.reject(&:empty?)
       data["skills"] = unique_skills
 
-      [JSON.pretty_generate(data), unique_skills, nil]
+      [ JSON.pretty_generate(data), unique_skills, nil ]
     rescue OllamaAdapter::Error => e
-      [nil, [], I18n.t('resumes.flash.processing_error', reason: e.message)]
+      [ nil, [], I18n.t("resumes.flash.processing_error", reason: e.message) ]
     rescue StandardError => e
-      [nil, [], I18n.t('resumes.flash.processing_error', reason: e.message)]
+      [ nil, [], I18n.t("resumes.flash.processing_error", reason: e.message) ]
     end
   end
-end 
+end

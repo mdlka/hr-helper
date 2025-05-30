@@ -1,7 +1,7 @@
 class ResumesController < ApplicationController
-  before_action :authenticate_user!, except: [:new, :create]
-  before_action :set_resume, only: [:show, :save_candidate]
-  before_action :check_resume_access, only: [:show]
+  before_action :authenticate_user!, except: [ :new, :create ]
+  before_action :set_resume, only: [ :show, :save_candidate ]
+  before_action :check_resume_access, only: [ :show ]
 
   def new
     @resume = Resume.new
@@ -13,20 +13,20 @@ class ResumesController < ApplicationController
 
     processor = ResumeProcessorService.new
     summary, skill_names, error = processor.process(@resume.content)
-    
+
     if error.present?
       @resume.errors.add(:base, error)
       render :new, status: :unprocessable_entity
       return
     end
-    
+
     @resume.summary = summary
-    
+
     if @resume.save
       session[:resume_skills] ||= {}
       session[:resume_skills][@resume.id.to_s] = skill_names
-      
-      redirect_to @resume, notice: t('resumes.flash.processed')
+
+      redirect_to @resume, notice: t("resumes.flash.processed")
     else
       render :new, status: :unprocessable_entity
     end
@@ -45,9 +45,9 @@ class ResumesController < ApplicationController
       end
 
       if current_user.saved_candidates.create(resume: @resume)
-        redirect_to saved_candidates_path, notice: t('resumes.flash.candidate_saved')
+        redirect_to saved_candidates_path, notice: t("resumes.flash.candidate_saved")
       else
-        redirect_to @resume, alert: t('resumes.flash.error_saving')
+        redirect_to @resume, alert: t("resumes.flash.error_saving")
       end
     end
   end
@@ -64,7 +64,7 @@ class ResumesController < ApplicationController
 
   def check_resume_access
     unless @resume.user == current_user || current_user.saved_candidates.exists?(resume: @resume)
-      redirect_to root_path, alert: t('resumes.flash.unauthorized')
+      redirect_to root_path, alert: t("resumes.flash.unauthorized")
     end
   end
-end 
+end
