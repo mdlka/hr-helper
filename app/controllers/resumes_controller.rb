@@ -10,7 +10,14 @@ class ResumesController < ApplicationController
     @resume = Resume.new(resume_params)
     @resume.user = current_user
 
+    processor = ResumeProcessorService.new
+    summary, tags = processor.process(@resume.content)
+    
+    @resume.summary = summary
+    
     if @resume.save
+      @resume.tags = tags
+      
       redirect_to @resume, notice: 'Resume was successfully processed.'
     else
       render :new, status: :unprocessable_entity
