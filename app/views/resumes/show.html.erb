@@ -63,8 +63,10 @@
                   <h5 class="border-bottom pb-2"><%= t('resumes.show.education') %></h5>
                   <% summary["education"].each do |edu| %>
                     <div class="mb-2">
-                      <strong><%= edu["degree"] %></strong><br>
-                      <%= edu["institution"] %> (<%= edu["year"] %>)
+                      <%= t('resumes.show.education_format', 
+                          degree: edu["degree"],
+                          institution: edu["institution"],
+                          year: edu["year"]) %>
                     </div>
                   <% end %>
                 </div>

@@ -12,7 +12,13 @@ class ResumesController < ApplicationController
     @resume.user = current_user if user_signed_in?
 
     processor = ResumeProcessorService.new
-    summary, tags = processor.process(@resume.content)
+    summary, tags, error = processor.process(@resume.content)
+    
+    if error.present?
+      @resume.errors.add(:base, error)
+      render :new, status: :unprocessable_entity
+      return
+    end
     
     @resume.summary = summary
     

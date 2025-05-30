@@ -11,42 +11,41 @@ class ResumeProcessorService
 
   def process(text)
     schema = {
-      type: "object",
-      properties: {
-        name: { type: "string" },
-        email: { type: "string" },
-        phone: { type: "string" },
-        location: { type: "string" },
-        current_position: { type: "string" },
-        experience_years: { type: "integer" },
-        skills: {
-          type: "array",
-          items: { type: "string" }
-        },
-        education: {
-          type: "array",
-          items: {
-            type: "object",
-            properties: {
-              degree: { type: "string" },
-              institution: { type: "string" },
-              year: { type: "integer" }
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "location": { "type": "string" },
+        "current_position": { "type": "string" },
+        "experience_years": { "type": "string" },
+        "education": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "degree": { "type": "string" },
+              "institution": { "type": "string" },
+              "year": { "type": "string" }
             }
           }
         },
-        work_experience: {
-          type: "array",
-          items: {
-            type: "object",
-            properties: {
-              company: { type: "string" },
-              position: { type: "string" },
-              duration: { type: "string" }
+        "work_experience": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "position": { "type": "string" },
+              "company": { "type": "string" },
+              "duration": { "type": "string" }
             }
           }
+        },
+        "skills": {
+          "type": "array",
+          "items": { "type": "string" }
         }
-      },
-      required: ["name", "skills"]
+      }
     }
 
     begin
@@ -62,25 +61,33 @@ class ResumeProcessorService
       end
       
       if parsed_result.nil?
-        return ["Failed to process resume", []]
+        return [nil, [], I18n.t('resumes.flash.processing_error', reason: "Failed to process resume")]
       end
       
       data = parsed_result.dig("properties") || parsed_result
+
+      if (data["email"].blank? && data["phone"].blank?)
+        return [nil, [], I18n.t('resumes.flash.missing_contacts')]
+      end
+      
       skills = data["skills"]
 
       unless skills.is_a?(Array)
-        return ["Failed to process resume: invalid skills format", []]
+        return [nil, [], I18n.t('resumes.flash.processing_error', reason: "invalid skills format")]
       end
       
-      tags = skills.map do |skill|
-        Tag.find_or_create_by!(name: skill.strip)
+      unique_skills = skills.compact.map(&:strip).uniq.reject(&:empty?)
+      data["skills"] = unique_skills
+      
+      tags = unique_skills.map do |skill|
+        Tag.find_or_create_by!(name: skill)
       end
 
-      [JSON.pretty_generate(data), tags]
+      [JSON.pretty_generate(data), tags, nil]
     rescue OllamaAdapter::Error => e
-      ["Failed to process resume", []]
+      [nil, [], I18n.t('resumes.flash.processing_error', reason: e.message)]
     rescue StandardError => e
-      ["Failed to process resume", []]
+      [nil, [], I18n.t('resumes.flash.processing_error', reason: e.message)]
     end
   end
 end 

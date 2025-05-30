@@ -34,11 +34,14 @@ ru:
         location: "Местоположение"
         current_position: "Текущая должность"
         experience_years: "Лет опыта"
+      education_format: "%{degree}, %{institution} (%{year})"
     flash:
       processed: "Резюме успешно обработано."
       candidate_saved: "Кандидат успешно сохранен."
       error_saving: "Ошибка при сохранении кандидата."
       unauthorized: "У вас нет доступа к этому резюме."
+      processing_error: "Ошибка при обработке резюме: %{reason}"
+      missing_contacts: "не указаны контактные данные (email или телефон)"
   
   saved_candidates:
     index:
@@ -114,4 +117,7 @@ ru:
           attributes:
             content:
               blank: "не может быть пустым"
-              too_short: "слишком короткий (минимум %{count} символов)" 
+              too_short: "слишком короткий (минимум %{count} символов)"
+              no_contacts: "должен содержать email или номер телефона"
+              invalid_email: "содержит некорректный email"
+              invalid_phone: "содержит некорректный номер телефона" 

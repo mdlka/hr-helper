@@ -64,7 +64,10 @@
                             <div class="mb-2">
                               <strong><%= t('resumes.show.education') %>:</strong><br>
                               <% summary["education"].each do |edu| %>
-                                <%= edu["degree"] %> from <%= edu["institution"] %> (<%= edu["year"] %>)<br>
+                                <%= t('resumes.show.education_format', 
+                                    degree: edu["degree"],
+                                    institution: edu["institution"],
+                                    year: edu["year"]) %><br>
                               <% end %>
                             </div>
                           <% end %>
