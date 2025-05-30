@@ -4,7 +4,11 @@ class SavedCandidatesController < ApplicationController
 
   def index
     @saved_candidates = current_user.saved_candidates.includes(resume: :tags)
-    @tags = Tag.all.order(:name)
+    
+    @tags = Tag.joins(resumes: :saved_candidates)
+              .where(saved_candidates: { user_id: current_user.id })
+              .distinct
+              .order(:name)
     
     if params[:tag_ids].present?
       tag_ids = Array(params[:tag_ids])
