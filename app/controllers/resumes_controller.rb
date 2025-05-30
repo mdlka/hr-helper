@@ -1,4 +1,5 @@
 class ResumesController < ApplicationController
+  before_action :authenticate_user!, except: [:new, :create]
   before_action :set_resume, only: [:show, :save_candidate]
   before_action :check_resume_access, only: [:show]
 
@@ -8,7 +9,7 @@ class ResumesController < ApplicationController
 
   def create
     @resume = Resume.new(resume_params)
-    @resume.user = current_user
+    @resume.user = current_user if user_signed_in?
 
     processor = ResumeProcessorService.new
     summary, tags = processor.process(@resume.content)
