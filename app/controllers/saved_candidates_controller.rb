@@ -1,6 +1,5 @@
 class SavedCandidatesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_saved_candidate, only: [ :destroy ]
 
   def index
     @saved_candidates = current_user.saved_candidates.includes(resume: :tags)
@@ -22,13 +21,8 @@ class SavedCandidatesController < ApplicationController
   end
 
   def destroy
+    @saved_candidate = current_user.saved_candidates.find(params[:id])
     @saved_candidate.destroy
     redirect_to saved_candidates_path, notice: t("saved_candidates.flash.removed")
-  end
-
-  private
-
-  def set_saved_candidate
-    @saved_candidate = current_user.saved_candidates.find(params[:id])
   end
 end
