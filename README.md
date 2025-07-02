@@ -50,3 +50,6 @@ rails db:migrate
 # Запустить сервер
 rails server
 ```
+
+## Демонстрация работы
+https://github.com/user-attachments/assets/51d081ec-a425-4b66-aa13-6231d8daa1ed
